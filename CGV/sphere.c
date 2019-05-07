@@ -14,7 +14,7 @@ void redisplayFunc(void)
     glLoadIdentity();
     // traslate the draw by z = -4.0
     // Note this when you decrease z like -8.0 the drawing will looks far , or smaller.
-    glTranslatef(1.0,0.0,-4.5);
+    glTranslatef(xTranslated,0.0,-4.5);
     // Red color used to draw.
     glColor3f(0.8, 0.2, 0.1); 
     // changing in transformation matrix.
@@ -27,9 +27,8 @@ void redisplayFunc(void)
     // scaling transfomation 
     glScalef(1.0,1.0,1.0);
     // built-in (glut library) function , draw you a sphere.
-    glutSolidSphere(radius,20,10);
+    glutSolidSphere(radius,20,20);
     // Flush buffers to screen
-     
     glFlush();        
     // sawp buffers called because we are using double buffering 
    // glutSwapBuffers();
@@ -44,7 +43,6 @@ void reshapeFunc(int x, int y)
     //Angle of view:40 degrees
     //Near clipping plane distance: 0.5
     //Far clipping plane distance: 20.0
-     
     gluPerspective(40.0,(GLdouble)x/(GLdouble)y,0.5,20.0);
     glMatrixMode(GL_MODELVIEW);
     glViewport(0,0,x,y);  //Use the whole window for rendering
@@ -52,11 +50,9 @@ void reshapeFunc(int x, int y)
 
 void idleFunc(void)
 {
- 
      yRotated += 0.05;
-	xTranslated+=0.01;
-     
-    redisplayFunc();
+     xTranslated+=0.001;
+     redisplayFunc();
 }
 
 
@@ -70,15 +66,14 @@ int main (int argc, char **argv)
     glutInitWindowSize(1280,720);
     // create the window 
     glutCreateWindow("Sphere Rotating Animation");
-    glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
-	xTranslated=0.0;
-    xRotated = yRotated = zRotated = 30.0;
-     xRotated=33;
-     yRotated=40;
+    glPolygonMode(GL_FRONT_AND_BACK,GL_LINE); 
+    xRotated=33;
+    yRotated=40;
+    zRotated = 30.0;
     glClearColor(0.0,0.0,0.0,0.0);
     //Assign  the function used in events
     glutDisplayFunc(redisplayFunc);
-   glutReshapeFunc(reshapeFunc);
+    glutReshapeFunc(reshapeFunc);
     glutIdleFunc(idleFunc);
     //Let start glut loop
     glutMainLoop();
